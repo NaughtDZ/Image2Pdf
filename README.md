@@ -6,7 +6,6 @@ Image2Pdf(文件夹内图片批量转PDF)
     将选定文件夹内所有图片打包到一个PDF里（jpg,jpeg,png,bmp）
     自适应图片大小调整页面大小
     默认DPI72无特殊情况不用更改
-    懒得搞release了，直接在bin里找exe就行咯
     pdf生成使用PDFSharp
     程序环境为.net 4.5.1
 
