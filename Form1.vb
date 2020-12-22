@@ -20,7 +20,7 @@ Public Class Form1
         End Try
         Dim imgfile As Collection = New Collection
         For Each things In allfile
-            If things.ToLower Like "*.jpg" OrElse things.ToLower Like "*.pmg" OrElse things.ToLower Like "*.jpeg" OrElse things.ToLower Like "*.bmp" Then
+            If things.ToLower Like "*.png" Or things.ToLower Like "*.jpg" Or things.ToLower Like "*.jpeg" Or things.ToLower Like "*.bmp" Then
                 'Debug.WriteLine("筛选之后：" & things)
                 imgfile.Add(things)
             End If
@@ -52,20 +52,21 @@ Public Class Form1
 
     Private Sub Merg2pdf(ByVal w8t2con)
         TrackBar1.Maximum = w8t2con.Count
-        Dim document As PdfDocument = New PdfDocument '创建pdf文件
+        Dim document As PdfDocument = New PdfDocument  '创建pdf文件
         For Each img In w8t2con
             Dim page As PdfPage = document.AddPage() '创建新页
             Dim gfx As XGraphics = XGraphics.FromPdfPage(page) '创建画布在page上
             Dim ximg As XImage = XImage.FromFile(img) '创建gfx可用的image
-            Dim g As Graphics
-            g = Graphics.FromImage(Image.FromFile(img))
-            Debug.WriteLine(ximg.HorizontalResolution) 'pdf打印页面大小与DPI有关
+            'Dim g As Graphics
+            'g = Graphics.FromImage(Image.FromFile(img))
+            'Debug.WriteLine(ximg.HorizontalResolution) 'pdf打印页面大小与DPI有关
             page.Width = ximg.PixelWidth '设置页面为图片分辨率,piexel是分辨率，width是通过dpi转换后的大小
             page.Height = ximg.PixelHeight
-            Debug.WriteLine("{0} x:{1} y:{2}", img, page.Width, page.Height)
-            Debug.WriteLine("x:{0} y:{1}", g.DpiX / TextBox3.Text, g.DpiY / TextBox3.Text)
+            'Debug.WriteLine("{0} x:{1} y:{2}", img, page.Width, page.Height)
+            'Debug.WriteLine("x:{0} y:{1}", g.DpiX / TextBox3.Text, g.DpiY / TextBox3.Text)
             gfx.ScaleTransform(ximg.HorizontalResolution / TextBox3.Text)
             gfx.DrawImage(ximg, 0, 0)
+            page.Close()
             TrackBar1.Value += 1
         Next
         document.Save(TextBox2.Text)
